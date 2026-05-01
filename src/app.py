@@ -4,7 +4,7 @@ from main_agents import identify_spoiler
 # Sayfa ayarlarını en başa alalım
 st.set_page_config(page_title="Spoiler Agent", layout="centered")
 
-st.title("🕵️‍♀️ Spoiler Detection Agent")
+st.title("Spoiler Detection Agent")
 st.write("Film ID ve yorumunuzu girerek analiz başlatın.")
 st.markdown("Yapay zeka ajanlarımız film özetlerini okur ve yorumunuzun spoiler içerip içermediğini analiz eder.")
 
