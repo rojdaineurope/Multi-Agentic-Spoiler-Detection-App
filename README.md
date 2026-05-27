@@ -7,7 +7,7 @@ Follow these instructions sequentially to set up the project and the data pipeli
 First, clone the repository and create an isolated Python environment:
 
 ```bash
-git clone [https://github.com/rojdaineurope/multi-agentic-spoiler-app.git](https://github.com/rojdaineurope/multi-agentic-spoiler-app.git)
+git clone [https://github.com/rojdaineurope/Multi-Agentic-Spoiler-Detection-App.git](https://github.com/rojdaineurope/Multi-Agentic-Spoiler-Detection-App.git)
 cd multi-agentic-spoiler-app
 ```
 
@@ -50,6 +50,7 @@ Add your APIkey to the env file like there.
 
 ```bash
 GROQ_API_KEY=your_groq_api_key_here
+
 ```
 
 ### Step 5: Data Preprocessing
@@ -74,9 +75,10 @@ Once the vector database is ready, start the main Multi-Agent Streamlit dashboar
 
 ```bash
 streamlit run app2.py
-```
+
 
 Note: Other files in our repository contain parameters and different paths that we modified to improve performance values; the latest updated version is in the main_agents file within the src/ directory.
 
 Rojda Süslü 21050911017
 Sena Dilan Çakır 21050911027
+```
