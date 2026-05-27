@@ -8,25 +8,28 @@ class OrchestratorAgent:
         self.critic = critic
 
     def run(self, comment, movie_id):
-        # 1. Analyzer → şüpheli cümleleri bul
+        # 1. Analyzer find suspicious letters
         claims = self.analyzer.extract_claims(comment)
 
-        if not claims or claims.strip() == "":
-            return "KARAR: NORMAL\nReason: No suspicious sentences found."
+        # If Analyzer turns 'NO_CLAIMS_FOUND' it gives it with its reason 
+        if "NO_SUSPICIOUS_FOUND" in claims:
+            return claims.replace("NO_SUSPICIOUS_FOUND", "KARAR: NORMAL")
 
-        # 2. Retriever → context getir
+        
+
+        # 2. Retriever brings context
         context = self.retriever.get_context(comment, movie_id)
 
         if context is None:
             return "HATA: Context bulunamadı"
 
-        # 3. Classifier → karar ver
+        # 3. Classifier takes a decision
         initial_result = self.classifier.classify(
-            comment=claims,   # 🔥 sadece şüpheli cümleleri veriyoruz
+            comment=claims,   
             context=context
         )
 
-        # 4. Critic → kontrol
+        # 4. Critic control/validate
         final_result = self.critic.review(
             comment=claims,
             classifier_output=initial_result
