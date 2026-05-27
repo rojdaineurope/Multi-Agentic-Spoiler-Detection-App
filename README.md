@@ -36,7 +36,7 @@ pip install -r requirements.txt
 
 ### Step 3: Download the Dataset
 
-Download the raw IMDb Spoiler Dataset from Kaggle: IMDB Spoiler Dataset
+Download the raw IMDb Spoiler Dataset from Kaggle: https://www.kaggle.com/datasets/rmisra/imdb-spoiler-dataset
 
 Extract the downloaded .zip file.
 
