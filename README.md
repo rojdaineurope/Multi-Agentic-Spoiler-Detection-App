@@ -31,7 +31,7 @@ Install all required libraries using the requirements.txt file:
 
 ```bash
 pip install -r requirements.txt
-(Alternatively, install manually: pip install langchain-chroma chromadb langchain-huggingface groq python-dotenv pandas scikit-learn streamlit)
+# Alternatively, install manually: pip install langchain-chroma chromadb langchain-huggingface groq python-dotenv pandas scikit-learn streamlit
 ```
 
 ### Step 3: Download the Dataset
