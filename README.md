@@ -77,7 +77,7 @@ Once the vector database is ready, start the main Multi-Agent Streamlit dashboar
 streamlit run app2.py
 ```
 
-Note: Other files in our repository contain parameters and different paths that we modified to improve performance values; the latest updated version is in the main_agents file within the src/ directory.
+Note: Other files in our repository contain parameters and different paths that we modified to improve performance values; the latest updated version is in the main agents files within the src/ directory.
 
 Rojda Süslü 21050911017
 Sena Dilan Çakır 21050911027
