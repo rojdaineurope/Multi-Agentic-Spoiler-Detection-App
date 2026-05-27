@@ -4,52 +4,51 @@ import nltk
 from nltk.corpus import stopwords
 from tqdm import tqdm
 
-# Gerekli dil paketini indirelim
+# Language packet
 nltk.download('stopwords')
 stop_words = set(stopwords.words('english'))
 
 def clean_text(text):
-    # 1. HTML etiketlerini temizle (ör: <br>)
+    # 1. HTML labels cleaned
     text = re.sub(r'<.*?>', '', text)
-    # 2. Sadece harfleri tut (rakam ve noktalama işaretlerini at)
+    # 2. Sjust hold letters
     text = re.sub(r'[^a-zA-Z\s]', '', text)
-    # 3. Küçük harfe çevir
+    # 3. lowercase
     text = text.lower().strip()
-    # 4. Gereksiz kelimeleri (stopwords) çıkar
+    # 4. remove stopwords
     tokens = [word for word in text.split() if word not in stop_words]
     return " ".join(tokens)
 
-# VERİYİ YÜKLEME
-print("Büyük veri okunuyor...")
-# Belleği yormamak için ilk 20.000 satırı alalım
+# Load Data
+print(" Data reading")
+
 df = pd.read_json('IMDB_reviews.json', lines=True, chunksize=20000)
 sample_df = next(df)
 
-print(f"Toplam {len(sample_df)} satır temizleniyor...")
-tqdm.pandas() # İlerleme çubuğu için
+print(f"Toplam {len(sample_df)}  rows are cleaning...")
+tqdm.pandas() 
 sample_df['cleaned_review'] = sample_df['review_text'].progress_apply(clean_text)
 
-# İhtiyacımız olan sütunları seçelim
-# 'is_spoiler' hedef değişkenimiz (label)
+
+# 'is_spoiler' target label
 processed_df = sample_df[['movie_id', 'is_spoiler', 'cleaned_review']]
 
-# TEMİZLENMİŞ VERİYİ KAYDET
+# record cleaned dataset
 processed_df.to_csv('cleaned_reviews.csv', index=False)
-print("İşlem tamam! 'cleaned_reviews.csv' dosyası oluşturuldu.")
+print(" 'cleaned_reviews.csv' ")
 
 import os
 
 output_file = 'cleaned_reviews.csv'
 
-# Eğer dosya daha önce oluşturulmadıysa temizleme işlemini yap
-if not os.path.exists(output_file):
-    print("Temizlenmiş dosya bulunamadı. İşlem başlatılıyor...")
-    # ... (burada senin temizleme kodların, df.to_csv vb. olacak) ...
-    processed_df.to_csv(output_file, index=False)
-else:
-    print(f"'{output_file}' zaten mevcut, direkt yükleniyor...")
-    processed_df = pd.read_csv(output_file)
+#if not os.path.exists(output_file):
+#   print("Temizlenmiş dosya bulunamadı. İşlem başlatılıyor...")
 
-# Sonuçları her durumda görmek için buraya yazıyoruz
-print("\n--- Veri Seti Spoiler Dağılımı ---")
-print(processed_df['is_spoiler'].value_counts())
+#    processed_df.to_csv(output_file, index=False)
+#else:
+#    print(f"'{output_file}' zaten mevcut, direkt yükleniyor...")
+#    processed_df = pd.read_csv(output_file)
+
+# For see how much spoiler we have but not necessary right now
+#print("\n--- Veri Seti Spoiler Dağılımı ---")
+#print(processed_df['is_spoiler'].value_counts())

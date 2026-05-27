@@ -5,19 +5,19 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
-# 1. Veriyi Yükle (JSON Lines formatında olduğu için lines=True)
-print("Film detayları okunuyor...")
+# 1. Load Data (since it is in JSON Lines format, lines=True)
+print("Reading movie details...")
 movies_df = pd.read_json('IMDB_movie_details.json', lines=True)
 
-# 2. Sadece özeti (plot_synopsis) olanları al
-# Bilgisayarını yormamak için ilk 1000 filmle başlayalım
+# 2. Filter for those with a summary (plot_synopsis)
+# Let's start with the first 1000 movies so as not to exhaust your computer
 movies_sample = movies_df[movies_df['plot_synopsis'].notna()].head(1000)
 
 docs = []
 for _, row in movies_sample.iterrows():
-    # Sütun ismini güvenli bir şekilde alalım
+    # Let's get the column name safely
     m_id = str(row['movie_id'])
-    # Eğer movie_name yoksa movie_id'yi isim olarak kullanalım
+    # If movie_name is missing, let's use movie_id as the name
     m_title = row.get('movie_name', m_id) 
     
     docs.append(Document(
@@ -25,20 +25,20 @@ for _, row in movies_sample.iterrows():
         metadata={"movie_id": m_id, "title": m_title}
     ))
 
-# 3. Metni Parçalara Böl (Ajanın okuyabileceği küçük parçalar)
+# 3. Split Text into Chunks (small chunks that the agent can read)
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
 split_docs = text_splitter.split_documents(docs)
 
-# 4. Vektörleştirme Modeli (HuggingFace)
-print("Embedding modeli yükleniyor...")
+# 4. Embedding Model (HuggingFace)
+print("Loading embedding model...")
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-# 5. Vektör Veritabanını (ChromaDB) Oluştur
-print(f"{len(split_docs)} metin parçası vektörleştiriliyor... (Birkaç dakika sürebilir)")
+# 5. Create the Vector Database (ChromaDB)
+print(f"{len(split_docs)} text chunks are being vectorized... (This may take a few minutes)")
 vector_db = Chroma.from_documents(
     documents=split_docs, 
     embedding=embeddings, 
     persist_directory="./chroma_db"
 )
 
-print("✅ Başarıyla tamamlandı! 'chroma_db' klasörü projenin hafızası olarak hazır.")
+print("Successfully completed! The 'chroma_db' folder is ready as the project's memory.")
