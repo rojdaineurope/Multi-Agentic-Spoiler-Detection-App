@@ -1,8 +1,8 @@
-## Step-by-Step Installation and Execution Guide
+## Step by Step Installation and Execution Guide
 
 Follow these instructions sequentially to set up the project and the data pipeline from scratch on a new machine.
 
-### Step 1: Clone the Repository & Setup Virtual Environment
+### Step 1: Clone the Repository and Setup Virtual Environment
 
 First, clone the repository and create an isolated Python environment:
 
@@ -11,17 +11,17 @@ git clone [https://github.com/rojdaineurope/multi-agentic-spoiler-app.git](https
 cd multi-agentic-spoiler-app
 ```
 
-# Create virtual environment
+### Create virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-# Activate (Windows)
+### Activate (Windows)
 
 venv\Scripts\activate
 
-# Activate (macOS/Linux)
+### Activate (macOS/Linux)
 
 source venv/bin/activate
 
@@ -46,7 +46,7 @@ Move the dataset files (e.g., IMDB_reviews.json, IMDB_movie_details.json) into t
 
 Create a .env file in the root directory of the project and insert your Groq API key to enable the Llama-3 model:
 
-Kod snippet'i
+Add your APIkey to the env file like there.
 
 ```bash
 GROQ_API_KEY=your_groq_api_key_here
@@ -58,9 +58,11 @@ Run the preprocessing script. This will clean the raw IMDb dataset (removing pun
 
 ```bash
 python src/preprocess.py
-Step 6: Initialize the ChromaDB Vector Database
-Run the vector storage script. This step vectorizes the cleaned data using the HuggingFace embedding model and creates the local ./chroma_db directory required for the Retriever Agent:
 ```
+
+### Step 6: Initialize the ChromaDB Vector Database
+
+Run the vector storage script. This step vectorizes the cleaned data using the HuggingFace embedding model and creates the local ./chroma_db directory required for the Retriever Agent:
 
 ```bash
 python src/vector_storage.py
@@ -73,3 +75,8 @@ Once the vector database is ready, start the main Multi-Agent Streamlit dashboar
 ```bash
 streamlit run app2.py
 ```
+
+Note: Other files in our repository contain parameters and different paths that we modified to improve performance values; the latest updated version is in the main_agents file within the src/ directory.
+
+Rojda Süslü 21050911017
+Sena Dilan Çakır 21050911027
